@@ -1,0 +1,38 @@
+<h2>🧪 คำนวณถังตกตะกอนและ Tube Settler</h2>
+
+<label>กำลังการผลิต (ลบ.ม./ชม.):</label>
+<input type="number" id="Q" step="0.01">
+
+<label>ความกว้างถังตกตะกอน (ม.):</label>
+<input type="number" id="W" step="0.01">
+
+<label>ความยาวถังตกตะกอน (ม.):</label>
+<input type="number" id="L" step="0.01">
+
+<label>ความลึกถังตกตะกอน (ม.):</label>
+<input type="number" id="D" step="0.01">
+
+<label>ความสูงจากปากรางถึง Tube Settler (ม.):</label>
+<input type="number" id="dw" step="0.01">
+
+<label>ความเร็วในการตกตะกอน (ม./ชม.):</label>
+<input type="number" id="So" step="0.01" value="1">
+
+<label>ความกว้างช่อง Tube Settler (ม.):</label>
+<input type="number" id="w" step="0.01" value="1">
+
+<label>มุมลาดเอียง Tube Settler (องศา):</label>
+<input type="number" id="degree" step="0.01" value="60">
+
+<label>ความสูง Tube Settler (ม.):</label>
+<input type="number" id="h" step="0.01">
+
+<label>Safety Factor (%):</label>
+<input type="number" id="SF" step="0.01" value="10">
+
+<label>พื้นที่ที่จัดสรรไว้สำหรับติดตั้ง Tube Settler (ตร.ม.):</label>
+<input type="number" id="At" step="0.01">
+
+<button onclick="calculateSedimentation()">คำนวณ</button>
+
+<div id="result" class="result"></div>

@@ -1,0 +1,29 @@
+<h2>🌊 คำนวณ Velocity Gradient ในระบบตกตะกอน</h2>
+
+<label>Stage:</label>
+<input type="number" id="stage" step="1">
+
+<label>อัตราการไหลของน้ำ (ลบ.ม./ชม.):</label>
+<input type="number" id="Q" step="0.01">
+
+<label>ความกว้างของช่องเปิด (ม.):</label>
+<input type="number" id="w" step="0.01">
+
+<label>ความลึกเฉลี่ยของน้ำแต่ละ stage (ม.):</label>
+<input type="number" id="D" step="0.01">
+
+<label>ความกว้างไม่รวมผนัง (ม.):</label>
+<input type="number" id="W" step="0.01">
+
+<label>ความยาวไม่รวมผนัง (ม.):</label>
+<input type="number" id="L" step="0.01">
+
+<label>จำนวนช่องทางตรง (ns):</label>
+<input type="number" id="ns" step="1">
+
+<label>จำนวนช่องทางเลี้ยว (nu):</label>
+<input type="number" id="nu" step="1">
+
+<button onclick="calculateVelocityGradient()">คำนวณ</button>
+
+<div id="result" class="result"></div>

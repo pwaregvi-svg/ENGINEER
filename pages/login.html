@@ -1,0 +1,88 @@
+<!-- login.html -->
+<div class="login-container">
+  <h2>Login</h2>
+  <form id="login-form">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required />
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required />
+
+    <button type="submit">Log In</button>
+  </form>
+  <div id="login-message"></div>
+</div>
+
+<style>
+  .login-container {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #f4f7f8;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    font-family: Arial, sans-serif;
+  }
+  .login-container h2 {
+    margin-bottom: 20px;
+    color: #0d1a2f;
+  }
+  label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+  }
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  button {
+    width: 100%;
+    padding: 12px;
+    background-color: #0d1a2f;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  button:hover {
+    background-color: #1a334d;
+  }
+  #login-message {
+    margin-top: 15px;
+    color: red;
+    font-weight: bold;
+  }
+</style>
+
+<script>
+  document.getElementById('login-form').addEventListener('submit', function(e) {
+    e.preventDefault(); // หยุดการ submit แบบปกติ
+
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const messageEl = document.getElementById('login-message');
+
+    // ตัวอย่างตรวจสอบ username/password แบบง่าย
+    if (username === 'admin' && password === '1234') {
+      messageEl.style.color = 'green';
+      messageEl.textContent = 'Login successful! Redirecting...';
+
+      // ตัวอย่าง: แปลงไปหน้า home หลัง login สำเร็จ
+      setTimeout(() => {
+        window.location.hash = 'home'; // หรือทำ routing SPA ของคุณตรงนี้
+      }, 1000);
+    } else {
+      messageEl.style.color = 'red';
+      messageEl.textContent = 'Invalid username or password.';
+    }
+  });
+</script>

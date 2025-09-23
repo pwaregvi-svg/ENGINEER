@@ -1,0 +1,31 @@
+<section id="unit-converter">
+  <h2>Unit Converter</h2>
+
+  <div class="converter">
+    <label for="value">ค่าที่ต้องการแปลง:</label>
+    <input type="number" id="value" placeholder="กรอกตัวเลข">
+
+    <label for="category">ประเภทหน่วย:</label>
+    <select id="category">
+      <option value="length">ความยาว</option>
+      <option value="mass">น้ำหนัก/มวล</option>
+      <option value="volume">ปริมาตร/ของไหล</option>
+      <option value="time">เวลา</option>
+      <option value="temperature">อุณหภูมิ</option>
+      <option value="speed">ความเร็ว</option>
+      <option value="force">แรง</option>
+      <option value="energy">พลังงาน</option>
+      <option value="power">กำลัง</option>
+      <option value="pressure">ความดัน</option>
+      <option value="density">ความหนาแน่น</option>
+    </select>
+
+<label>From: <select id="from-unit"></select></label>
+<label>To: <select id="to-unit"></select></label><br>
+
+
+    <button id="convert-btn">แปลง</button>
+
+    <p id="result"></p>
+  </div>
+</section>

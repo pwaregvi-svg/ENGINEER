@@ -1,0 +1,14 @@
+<h2>🔧 คำนวณ NPSHa (Net Positive Suction Head Available)</h2>
+
+<label>ระดับผิวน้ำจนถึงปั๊ม (Hs) (ม.):</label>
+<input type="number" id="Hs" step="0.01">
+
+<label>แรงดันสูญเสียในเส้นท่อ (hf) (ม.):</label>
+<input type="number" id="hf" step="0.01">
+
+<label>NPSHr (ค่าที่ปั๊มต้องการ) (ม.):</label>
+<input type="number" id="NPSHr" step="0.01">
+
+<button onclick="calculateNPSHa()">คำนวณ</button>
+
+<div id="result" class="result"></div>

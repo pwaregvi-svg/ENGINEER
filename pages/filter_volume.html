@@ -1,0 +1,23 @@
+<h2>🧱 คำนวณปริมาตรทรายและกรวดกรอง</h2>
+
+<label>จำนวนถัง:</label>
+<input type="number" id="n" step="1" min="1">
+
+<label>ความกว้างของถังทรายกรอง (ม.):</label>
+<input type="number" id="W" step="0.01">
+
+<label>ความยาวของถังทรายกรอง (ม.):</label>
+<input type="number" id="L" step="0.01">
+
+<label>Safety Factor (%):</label>
+<input type="number" id="SF" step="0.01" value="10">
+
+<label>ความลึกของชั้นทราย (ม.):</label>
+<input type="number" id="Ds" step="0.01" value="0.70">
+
+<label>ความลึกของชั้นกรวด (ม.):</label>
+<input type="number" id="Dg" step="0.01" value="0.575">
+
+<button onclick="calculateFilterVolume()">คำนวณ</button>
+
+<div id="result" class="result"></div>
