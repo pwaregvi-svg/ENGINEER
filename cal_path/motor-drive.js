@@ -1,13 +1,16 @@
+// ต้องโหลด FileSaver.js ก่อนใช้งาน
+// <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
 const { jsPDF } = window.jspdf;
 
-// SI multipliers สำหรับ parsing input
+// SI multipliers for parsing input
 const SI_MULTIPLIERS = {
   q: 1e-30, r: 1e-27, y: 1e-24, z: 1e-21, a: 1e-18, f: 1e-15, p: 1e-12, n: 1e-9,
   u: 1e-6, µ: 1e-6, m: 1e-3, '': 1, k: 1e3, M: 1e6, G: 1e9, T: 1e12, P: 1e15,
   E: 1e18, Z: 1e21, Y: 1e24, R: 1e27, Q: 1e30
 };
 
-// SI multipliers สำหรับ output
+// SI multipliers for output
 const SI_OUTPUT = [
   { suffix: 'Q', value: 1e30 },
   { suffix: 'R', value: 1e27 },
@@ -52,26 +55,21 @@ function parsePowerInput(value) {
   return isNaN(num) ? NaN : num * (SI_MULTIPLIERS[suffix] || NaN);
 }
 
-// Format number to SI suffix or exponential
+// Format SI for output
 function formatSI(value) {
   const abs = Math.abs(value);
   const minSI = 9_999.9999e-30;
   const maxSI = 9_999.999e30;
 
-  if (abs < minSI || abs > maxSI) {
-    return value.toExponential(4);
-  }
+  if (abs < minSI || abs > maxSI) return value.toExponential(4);
 
   for (const si of SI_OUTPUT) {
-    if (abs >= si.value) {
-      return (value / si.value).toFixed(4) + si.suffix;
-    }
+    if (abs >= si.value) return (value / si.value).toFixed(4) + si.suffix;
   }
-
   return value.toFixed(4);
 }
 
-// Validate input
+// Validate input and show warning
 function validateInput(input, type) {
   const value = input.value.trim();
   let valid = true;
@@ -106,27 +104,17 @@ function validateInput(input, type) {
   return valid;
 }
 
-// Create a new calculation set
+// Create calculation set
 function createCalculationSet() {
   const container = document.createElement('fieldset');
   container.innerHTML = `
     <legend>Set</legend>
-    
     <label>Load Type :</label>
     <select class="load_type">
       <option value="R">Resistive Load</option>
       <option value="L" selected>Inductive Load</option>
       <option value="C">Capacitive Load</option>
     </select>
-
-    <label>Circuit Protector Type :</label>
-    <select class="Circuit_Protector_Type">
-      <option value="Delay_Fuse">Delay Fuse</option>
-      <option value="Non_Time_Fuse">Non Time Fuse</option>
-      <option value="cut_cb">Cut off CB</option>
-      <option value="Time_cb" selected>Time Invest CB</option>
-    </select>
-
     <label>Number of Phase :</label>
     <input type="number" class="phase" step="1" value="3" min="0">    
     <label>Power (W):</label>
@@ -139,8 +127,6 @@ function createCalculationSet() {
     <input type="number" class="pf" step="0.01" value="85" min="0" max="100">
     <label>Ambient (°C):</label>
     <input type="number" class="ambient" step="0.01" value="40">
-    <label>Cable Group :</label>
-    <input type="number" class="Cg" step="1" value="1" min="0">    
     <button class="remove-set">🗑️ Remove Set</button>
     <div class="result-line"></div>
   `;
@@ -151,14 +137,10 @@ function createCalculationSet() {
     updateLegendNumbers();
   });
 
-  container.querySelectorAll('input, select').forEach(input => {
+  container.querySelectorAll('input').forEach(input => {
     input.addEventListener('input', () => {
       validateInput(input, input.className);
       calculateSet(container);
-    });
-    input.addEventListener('touchstart', e => {
-      e.preventDefault();
-      input.focus();
     });
   });
 
@@ -185,14 +167,10 @@ function calculateSet(fieldset) {
 
   const I = power / (Math.sqrt(3) * voltage * (efficiency / 100) * (pf / 100));
   const display = formatSI(I);
-  const resultDiv = fieldset.querySelector('.result-line');
-
-  resultDiv.style.wordBreak = 'break-word'; // mobile friendly
-  resultDiv.style.overflowWrap = 'break-word';
-  resultDiv.textContent = `Current: ${display} A`;
+  fieldset.querySelector('.result-line').textContent = `Current: ${display} A`;
 }
 
-// Export PDF
+// Export PDF (มือถือ + PC)
 function exportToPDF() {
   const doc = new jsPDF();
   doc.setFont("helvetica");
@@ -223,26 +201,12 @@ function exportToPDF() {
     if (y > 270) { doc.addPage(); y = 20; }
   });
 
-  doc.save('motor-calculation.pdf');
+  // ใช้ FileSaver.js เพื่อดาวน์โหลดบนมือถือและ PC
+  const pdfBlob = doc.output('blob');
+  saveAs(pdfBlob, 'motor-calculation.pdf');
 }
 
 // Event binding
 document.getElementById('add-set').addEventListener('click', createCalculationSet);
 document.getElementById('export-pdf').addEventListener('click', exportToPDF);
-
-// Mobile touch support for buttons
-['add-set','export-pdf'].forEach(id=>{
-  const btn=document.getElementById(id);
-  if(btn){
-    btn.addEventListener('touchstart', e=>{ e.preventDefault(); btn.click(); });
-  }
-});
-
-// Scroll input into view on focus (mobile)
-document.querySelectorAll('input, select').forEach(el=>{
-  el.addEventListener('focus', e=>{
-    e.target.scrollIntoView({behavior:'smooth', block:'center'});
-  });
-});
-
 window.addEventListener('load', () => createCalculationSet());
